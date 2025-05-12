@@ -1,0 +1,83 @@
+<div style="padding: 20px;">
+  <h1>Translation Viewer</h1>
+
+  <div style="margin-bottom: 20px;">
+    <button (click)="view = 'table'" [disabled]="view === 'table'">View All (Table)</button>
+    <button (click)="view = 'single'" [disabled]="view === 'single'">View One-by-One</button>
+
+    <div *ngIf="tooltipMessage" class="tooltip-popup">
+      {{ tooltipMessage }}
+    </div>
+  </div>
+
+  <p *ngIf="!loaded">Loading translations...</p>
+
+  <ng-container *ngIf="loaded">
+    <!-- Table View -->
+    <div *ngIf="view === 'table'">
+      <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th *ngFor="let lang of languages">{{ lang.toUpperCase() }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let key of keys">
+            <td>
+              {{ key }}
+              <button (click)="copyTextWithContext('KEY', key, key)" [disabled]="copiedEntries['KEY']?.[key]">{{
+                copiedEntries['KEY']?.[key] ? '✔ Copied' : '📋' }}</button>
+            </td>
+            <td *ngFor="let lang of languages">
+              {{ translations[lang][key] }}
+              <button (click)="copyTextWithContext(lang, key, translations[lang][key])"
+                [disabled]="copiedEntries[lang]?.[key]"> {{ copiedEntries[lang]?.[key] ? '✔ Copied' : '📋' }}</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Single Key View -->
+    <div *ngIf="view === 'single'" style="font-size: xx-large;">
+      <div style="margin-bottom: 10px;">
+        <div class="nav-buttons">
+          <button (click)="prev()" [disabled]="currentIndex === 0">⬅ Previous</button>&nbsp;
+          <span class="key-count spacing">({{ currentIndex + 1 }} of {{ keys.length }})</span>&nbsp;
+          <button (click)="next()" [disabled]="currentIndex === keys.length - 1">Next ➡</button>
+        </div>
+
+        <!-- Go to Key by Number or Name -->
+        <div class="go-to-key">
+          <input type="number" placeholder="Enter key number (1-{{ keys.length }})" [(ngModel)]="keyNumberInput"
+            (input)="onInputChange('number')" min="1" [max]="keys.length" />
+
+          <input type="text" placeholder="Search for key..." [(ngModel)]="keySearchInput" (input)="onInputChange('search')"  />
+        </div>
+      </div>
+
+
+      <div>
+        <h3>
+          Key: {{ currentKey }}
+          <button (click)="copyTextWithContext('KEY', currentKey, currentKey)"
+            [disabled]="copiedEntries['KEY']?.[currentKey]">{{ copiedEntries['KEY']?.[currentKey] ? '✔ Copied' : '📋'
+            }}</button>
+        </h3>
+
+        <ul>
+          <li *ngFor="let lang of languages">
+            <strong>{{ lang.toUpperCase() }}:</strong> {{ currentTranslations[lang] }}
+            <button (click)="copyTextWithContext(lang, currentKey, currentTranslations[lang])"
+              [disabled]="copiedEntries[lang]?.[currentKey]">{{ copiedEntries[lang]?.[currentKey] ? '✔ Copied' : '📋'
+              }}</button>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </ng-container>
+</div>

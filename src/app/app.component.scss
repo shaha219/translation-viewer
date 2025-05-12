@@ -1,0 +1,24 @@
+.nav-buttons {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.key-count {
+    font-weight: bold;
+}
+
+.go-to-key {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+input[type="number"],
+input[type="text"] {
+    padding: 8px;
+    font-size: 14px;
+    width: 200px;
+}

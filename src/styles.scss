@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+.tooltip-popup {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #323232;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 36px;
+    opacity: 0.9;
+    z-index: 999;
+  }
