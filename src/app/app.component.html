@@ -26,13 +26,19 @@
           <tr *ngFor="let key of keys">
             <td>
               {{ key }}
-              <button (click)="copyTextWithContext('KEY', key, key)" [disabled]="copiedEntries['KEY']?.[key]">{{
-                copiedEntries['KEY']?.[key] ? '✔ Copied' : '📋' }}</button>
+              <!-- Key translation -->
+              <button (click)="copyTextWithContext('KEY', key, key)"
+                [disabled]="copiedEntries['KEY'] && copiedEntries['KEY'][key]">
+                {{ copiedEntries['KEY'] && copiedEntries['KEY'][key] ? '✔ Copied' : '📋' }}
+              </button>
+
             </td>
             <td *ngFor="let lang of languages">
-              {{ translations[lang][key] }}
+              {{ translations[lang] && translations[lang][key] || 'No translation available' }}
               <button (click)="copyTextWithContext(lang, key, translations[lang][key])"
-                [disabled]="copiedEntries[lang]?.[key]"> {{ copiedEntries[lang]?.[key] ? '✔ Copied' : '📋' }}</button>
+                [disabled]="copiedEntries[lang] && copiedEntries[lang][key]">
+                {{ copiedEntries[lang] && copiedEntries[lang][key] ? '✔ Copied' : '📋' }}
+              </button>
             </td>
           </tr>
 
@@ -54,28 +60,29 @@
           <input type="number" placeholder="Enter key number (1-{{ keys.length }})" [(ngModel)]="keyNumberInput"
             (input)="onInputChange('number')" min="1" [max]="keys.length" />
 
-          <input type="text" placeholder="Search for key..." [(ngModel)]="keySearchInput" (input)="onInputChange('search')"  />
+          <input type="text" placeholder="Search for key..." [(ngModel)]="keySearchInput"
+            (input)="onInputChange('search')" />
         </div>
       </div>
-
 
       <div>
         <h3>
           Key: {{ currentKey }}
           <button (click)="copyTextWithContext('KEY', currentKey, currentKey)"
-            [disabled]="copiedEntries['KEY']?.[currentKey]">{{ copiedEntries['KEY']?.[currentKey] ? '✔ Copied' : '📋'
-            }}</button>
+            [disabled]="copiedEntries['KEY'] && copiedEntries['KEY'][currentKey]">
+            {{ copiedEntries['KEY'] && copiedEntries['KEY'][currentKey] ? '✔ Copied' : '📋' }}
+          </button>
         </h3>
 
         <ul>
           <li *ngFor="let lang of languages">
             <strong>{{ lang.toUpperCase() }}:</strong> {{ currentTranslations[lang] }}
             <button (click)="copyTextWithContext(lang, currentKey, currentTranslations[lang])"
-              [disabled]="copiedEntries[lang]?.[currentKey]">{{ copiedEntries[lang]?.[currentKey] ? '✔ Copied' : '📋'
-              }}</button>
+              [disabled]="copiedEntries[lang] && copiedEntries[lang][currentKey]">
+              {{ copiedEntries[lang] && copiedEntries[lang][currentKey] ? '✔ Copied' : '📋' }}
+            </button>
           </li>
         </ul>
-
       </div>
 
     </div>

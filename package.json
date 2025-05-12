@@ -1,6 +1,6 @@
 {
   "name": "translation-viewer",
-  "version": "1.05.1201",
+  "version": "1.05.1202",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

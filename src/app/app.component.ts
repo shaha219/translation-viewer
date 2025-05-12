@@ -38,6 +38,11 @@ export class AppComponent implements OnInit {
       this.translations = this.translationService.getAllTranslations();
       this.keys = this.translationService.getKeys();
 
+
+      // Log the languages and translations to the console
+      console.log('Languages:', this.languages);
+      console.log('Translations:', this.translations);
+
       const stored = localStorage.getItem('copiedEntries');
       if (stored) {
         this.copiedEntries = JSON.parse(stored);
@@ -60,7 +65,7 @@ export class AppComponent implements OnInit {
       this.updateCurrentKey();
     }
   }
-  
+
   prev() {
     if (this.currentIndex > 0) {
       this.onInputChange('nextPrev')
@@ -125,7 +130,7 @@ export class AppComponent implements OnInit {
     } else if (inputType === 'search') {
       this.keyNumberInput = null;
       this.searchForKey()
-    } else if (inputType === 'nextPrev'){
+    } else if (inputType === 'nextPrev') {
       this.keySearchInput = '';
       this.keyNumberInput = null;
     }
